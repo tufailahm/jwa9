@@ -56,7 +56,7 @@ public class ProductController {
 		} else {
 			result = productService.updateProduct(product);
 			if (result.equals("Product updated successfully")) {
-				responseEntity = new ResponseEntity<String>(result, HttpStatus.OK); // 201
+				responseEntity = new ResponseEntity<String>(result, HttpStatus.OK); // 200
 			} else {
 				responseEntity = new ResponseEntity<String>(result, HttpStatus.NOT_ACCEPTABLE); // 406
 			}
@@ -93,9 +93,9 @@ public class ProductController {
 			products = productService.getProductsByName(productName);
 		}
 		if (products.size() == 0) {
-			responseEntity = new ResponseEntity<List<Product>>(products, HttpStatus.NO_CONTENT); // 201
+			responseEntity = new ResponseEntity<List<Product>>(products, HttpStatus.NO_CONTENT); // 204
 		} else {
-			responseEntity = new ResponseEntity<List<Product>>(products, HttpStatus.OK); // 201
+			responseEntity = new ResponseEntity<List<Product>>(products, HttpStatus.OK); // 200
 		}
 
 		return responseEntity;
