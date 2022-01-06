@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
 			return "Product saved successfully";
 		}
 	}
+
 	@Override
 	public String updateProduct(Product product) {
 		if (product.getPrice() < 0 || product.getQuantityOnHand() < 0)
@@ -35,11 +36,13 @@ public class ProductServiceImpl implements ProductService {
 			return "Product updated successfully";
 		}
 	}
+
 	@Override
 	public String deleteProduct(int productId) {
 		productRepository.deleteById(productId);
 		return "Product with product id : " + productId + " deleted successfully !!";
 	}
+
 	@Override
 	public Product getProduct(int productId) {
 		Optional<Product> product = productRepository.findById(productId);
@@ -57,25 +60,60 @@ public class ProductServiceImpl implements ProductService {
 		return product.isPresent();
 	}
 
-	
-	
-	
 	@Override
 	public List<Product> getProductsByName(String productName) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findByProductName(productName);
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public List<Product> getProductsByPrice(int price) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findByPrice(price);
 	}
 
 	@Override
 	public List<Product> getProductsByPriceRange(int minimunPrice, int maximumPrice) {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepository.findByPriceBetween(minimunPrice, maximumPrice);
+	}
+
+	@Override
+	public List<Product> getProductsByQuanityRange(int minimunQuantity, int maximumQuantity) {
+		return productRepository.findByQuantityOnHandBetween(minimunQuantity, maximumQuantity);
+	}
+
+	@Override
+	public List<Product> getProductsByNameAndPrice(String productName, int price) {
+		return productRepository.findByProductNameAndPrice(productName, price);
 	}
 
 }

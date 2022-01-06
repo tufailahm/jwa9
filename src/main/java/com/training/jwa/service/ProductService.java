@@ -17,4 +17,8 @@ public interface ProductService {
 		public List<Product> getProductsByName(String productName);
 		public List<Product> getProductsByPrice(int price);
 		public List<Product> getProductsByPriceRange(int minimunPrice,int maximumPrice);
+		public List<Product> getProductsByQuanityRange(int minimunQuantity,int maximumQuantity);
+		
+		public List<Product> getProductsByNameAndPrice(String productName,int price);
+
 }

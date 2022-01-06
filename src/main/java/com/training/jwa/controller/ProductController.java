@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.training.jwa.model.Product;
@@ -23,7 +24,6 @@ import com.training.jwa.service.ProductService;
 public class ProductController {
 
 	@Autowired
-
 	ProductService productService;
 
 	// ResponseEntity in spring entity
@@ -83,20 +83,21 @@ public class ProductController {
 		// send appropriate status codes
 		return responseEntity;
 	}
-
 	@GetMapping
-	public ResponseEntity<List<Product>> getProducts() {
+	public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) String productName) {
 		ResponseEntity<List<Product>> responseEntity = null;
-
 		List<Product> products = new ArrayList<Product>();
-		products = productService.getProducts();
+		if (productName == null) {
+			products = productService.getProducts();
+		} else {
+			products = productService.getProductsByName(productName);
+		}
 		if (products.size() == 0) {
 			responseEntity = new ResponseEntity<List<Product>>(products, HttpStatus.NO_CONTENT); // 201
-
 		} else {
 			responseEntity = new ResponseEntity<List<Product>>(products, HttpStatus.OK); // 201
-
 		}
+
 		return responseEntity;
 	}
 
