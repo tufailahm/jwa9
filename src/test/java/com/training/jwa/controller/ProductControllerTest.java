@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.UnsupportedEncodingException;
+
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -78,10 +80,37 @@ class ProductControllerTest extends AbstractTest {
 	@Test
 	@DisplayName("Testing delete product")
 	@Order(5)
-	void testDeleteProduct() {
-		fail("Not yet implemented");
+	void testDeleteProduct() throws Exception {
+		MvcResult mvcResult  = mockMvc.perform(
+				MockMvcRequestBuilders.delete(uri+"/"+productId)
+				.contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+		
+		int status = mvcResult.getResponse().getStatus();
+		String content = mvcResult.getResponse().getContentAsString();
+		assertEquals(200, status);
+		assertEquals("Product with product id : " + productId + " deleted successfully !!", content);
 	}
 
+	
+
+	@Test
+	@DisplayName("Testing get single product")
+	@Order(4)
+	void testGetProduct() throws Exception {
+		Product expectedProduct = new Product(productId, "NewDummyProduct", 200, 300);
+
+		MvcResult mvcResult  = mockMvc.perform(
+				MockMvcRequestBuilders.get(uri+"/"+productId)
+				.contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+		
+		int status = mvcResult.getResponse().getStatus();
+		String content = mvcResult.getResponse().getContentAsString();
+		Product actualProduct = super.mapFromJson(content, Product.class);
+		assertEquals(200, status);
+		assertEquals(expectedProduct, actualProduct);
+	}
+	
+	
 	@Test
 	@DisplayName("Testing get all products")
 	@Order(3)
@@ -96,16 +125,6 @@ class ProductControllerTest extends AbstractTest {
 		assertEquals(200, status);
 		assertTrue(products.length > 0);
 	}
-
-	@Test
-	@DisplayName("Testing get single product")
-	@Order(4)
-	void testGetProduct() {
-		fail("Not yet implemented");
-	}
-	
-	
-	
 	
 	
 	

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.training.jwa.service.ProductService;
 
 @RestController
 @RequestMapping("product") // localhost:9090/product
+@CrossOrigin (origins = "http://localhost:4200")
 public class ProductController {
 
 	@Autowired
@@ -75,7 +77,7 @@ public class ProductController {
 		} else {
 			result = productService.deleteProduct(productId);
 			if (result.equals("Product with product id : " + productId + " deleted successfully !!")) {
-				responseEntity = new ResponseEntity<String>(result, HttpStatus.OK); // 201
+				responseEntity = new ResponseEntity<String>(result, HttpStatus.OK); // 200
 			} else {
 				responseEntity = new ResponseEntity<String>(result, HttpStatus.NOT_ACCEPTABLE); // 406
 			}
